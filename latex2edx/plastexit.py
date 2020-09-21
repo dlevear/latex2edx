@@ -11,7 +11,7 @@ except:
 from plasTeX.Renderers import XHTML
 from plasTeX.TeX import TeX
 from plasTeX.Renderers.PageTemplate import Renderer as _Renderer
-from plasTeX.Config import config as plasTeXconfig
+#from plasTeX.Config import config as plasTeXconfig
 from xml.sax.saxutils import escape, unescape
 from .abox import AnswerBox, split_args_with_quoted_strings
 from io import StringIO
@@ -314,8 +314,8 @@ class plastex2xhtml(object):
         tex.ownerDocument.config['files']['filename'] = self.output_fn
         tex.ownerDocument.config['general']['theme'] = 'plain'
 
-        plasTeXconfig.add_section('logging')
-        plasTeXconfig['logging'][''] = CRITICAL
+        #plasTeXconfig.add_section('logging')
+        #plasTeXconfig['logging'][''] = CRITICAL
 
         self.tex = tex
         if not self.verbose:
@@ -434,11 +434,12 @@ class plastex2xhtml(object):
 
             newstring.append(line)
             for env in edXenvironments:
-                if line.startswith('\\begin{%s}' % env):
+                if line.lstrip().startswith('\\begin{%s}' % env):
                     # queue up newline insertion
                     insert_nl = True
 
         newstring = '\n'.join(newstring)
         if self.verbose:
             print("[latex2html.plastexit] added %d newlines to workaround plastex bug crashing when \\begin{edXchapter} and \\begin{edXsection} with no intermediate newline" % nnl)
+            print("New File: " + newstring)
         return newstring
