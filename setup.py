@@ -18,7 +18,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name='latex2edx',
-    version='1.6.2.JD',
+    version='1.6.2.JD.2',
     author='I. Chuang',
     author_email='ichuang@mit.edu',
     packages=['latex2edx', 'latex2edx.test'],
