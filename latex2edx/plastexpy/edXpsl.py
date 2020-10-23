@@ -174,6 +174,9 @@ class edXshowhide(Base.Environment):  # block of text to be hidden by default, b
 class edXscript(MyBaseVerbatim):
     macroName = "edXscript"
 
+class unitTest(MyBaseVerbatim):
+    macroName = "unitTest"
+
 
 class endedXscript(Base.endverbatim):
     macroName = "endedXscript"
