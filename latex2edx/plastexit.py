@@ -420,6 +420,7 @@ class plastex2xhtml(object):
         nnl = 0
 
         for line in texstring.split('\n'):
+            line=line.lstrip()
 
             if insert_nl:
                 # insert empty line if current line is not already empty line
