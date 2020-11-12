@@ -1639,7 +1639,7 @@ class latex2edx(object):
         '''
         Run syntax check on all python scripts
         '''
-        for script in tree.findall('.//script[@type="text/python"]'):
+        for script in tree.findall('.//script[@type="loncapa/python"]'):
             pyfile = tempfile.NamedTemporaryFile(mode='w', delete=False)
             if script.text is None:
                 print("Warning: empty script!")

@@ -217,7 +217,7 @@ class AnswerBox(object):
 
         <edx_general_hint_system />
 
-        <script type="text/python">
+        <script type="loncapa/python">
         do_hints_for_hint1 = HintSystem(hints=hint1).check_hint
         </script>
 
@@ -565,7 +565,7 @@ class AnswerBox(object):
             # to True.
             #
             # For multiexternalresponse, the grader parameters are encoded in a
-            # <script type="text/python">...</script> stanza.
+            # <script type="loncapa/python">...</script> stanza.
 
             tags = {'multicoderesponse': "coderesponse",
                     'multiexternalresponse': "externalresponse"
@@ -614,7 +614,7 @@ class AnswerBox(object):
                 self.require_args(['url'])
                 self.copy_attrib(abargs, 'url', abxml)
                 script_elem = etree.Element("script")
-                script_elem.set("type", "text/python")
+                script_elem.set("type", "loncapa/python")
                 script_elem.text = stext
 
             # now construct input elements for each prompt
@@ -885,14 +885,14 @@ class AnswerBox(object):
             hintgroup = etree.SubElement(abxml, 'hintgroup')
             hintgroup.set('hintfn', hintfn)
             hint_extras = "<edx_general_hint_system />\n"
-            hint_extras += '<script type="text/python">\n%s = HintSystem(hints=%s).check_hint\n</script>\n' % (hintfn, hints)
+            hint_extras += '<script type="loncapa/python">\n%s = HintSystem(hints=%s).check_hint\n</script>\n' % (hintfn, hints)
         self.hint_extras = hint_extras
 
         xml_str = etree.tostring(abxml, pretty_print=True).decode()
         xml_str = re.sub('(?ms)<html>(.*)</html>', '\\1', xml_str)
 
         if script_code:
-            code_str = '<script type="text/python" system_path="python_lib">\n'
+            code_str = '<script type="loncapa/python" system_path="python_lib">\n'
             code_str += "<![CDATA[\n"
             code_str += script_code
             code_str += "\n]]>\n</script>\n"
@@ -1277,7 +1277,7 @@ def test_multiexternalresponse1():
     print(xmlstr)
     assert ab.xml is not None
     assert '<span id="abc123"' in xmlstr
-    m = re.search('<script type="text/python">(.*)</script>', xmlstr, flags=re.M+re.S)
+    m = re.search('<script type="loncapa/python">(.*)</script>', xmlstr, flags=re.M+re.S)
     sc = m.group(1)
     context = {}
     exec(sc, globals(), context)
@@ -1305,7 +1305,7 @@ def test_multiexternalresponse2():
     xmlstr = etree.tostring(ab.xml).decode()
     print(xmlstr)
     assert "<answer" not in xmlstr
-    m = re.search('<script type="text/python">(.*)</script>', xmlstr, flags=re.M+re.S)
+    m = re.search('<script type="loncapa/python">(.*)</script>', xmlstr, flags=re.M+re.S)
     sc = m.group(1)
     assert 'API_KEY="secret_key"' in sc
     

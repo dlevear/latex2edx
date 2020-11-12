@@ -664,7 +664,7 @@ Example input::
 
 Output XML::
 
-    <script type="text/python" system_path="python_lib">
+    <script type="loncapa/python" system_path="python_lib">
     
     def sumtest(expect,ans):
         try:
