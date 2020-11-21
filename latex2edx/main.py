@@ -1646,7 +1646,7 @@ class latex2edx(object):
                 print("Script location: %s" % etree.tostring(script))
                 continue
             # Remove indentation before trying to compile
-            L = script.text.split("\n")
+            L = [x for x in script.text.split("\n") if x.strip() != '']
             baseIndent = len(L[0]) - len(L[0].lstrip(' '))
             #each line starts with baseIndent spaces
             newscript = '\n'.join([x[baseIndent:].rstrip() for x in L])
