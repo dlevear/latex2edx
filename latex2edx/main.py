@@ -174,6 +174,7 @@ class latex2edx(object):
         self.fix_filters = [self.fix_xhtml_descriptor_in_p,
                             self.fix_attrib_string,
                             self.add_url_names,
+                            self.fix_scripts,
                             self.fix_table,
                             self.fix_table_p,
                             self.fix_latex_minipage_div,
@@ -450,6 +451,33 @@ class latex2edx(object):
                     newstyle += '; '
                 newstyle += 'border:none'
                 td.set('style', newstyle)
+
+    @staticmethod
+    def fix_scripts(tree):
+        '''
+        '''
+        def first_nonempty_entry(L):
+            for x in L:
+              if len(x.strip()) != 0:
+                return x
+            return -1
+
+        def process_indentation(fstring):
+            print("=============PROCESSING=============")
+            print(fstring)
+            lines = fstring.split("\n")
+            fne = first_nonempty_entry(lines)
+            print("fne: {}".format(fne))
+            extraSpace = len(fne) - len(fne.lstrip(' '))
+            newlines = []
+            for line in lines:
+                newlines.append(line[extraSpace:].rstrip())
+            print("=============RESULT=============")
+            print("\n".join(newlines))
+            return "\n".join(newlines)
+
+        for script in tree.findall('.//script'):
+            script.text = process_indentation(script.text)
 
     @staticmethod
     def fix_table_p(tree):
