@@ -419,9 +419,6 @@ class plastex2xhtml(object):
         insert_nl = False
         nnl = 0
 
-        edXscript=[]
-        insideScript=False
-
         for line in texstring.split('\n'):
 
             if insert_nl:
@@ -430,21 +427,6 @@ class plastex2xhtml(object):
                     newstring.append('')
                     nnl += 1
                 insert_nl = False
-
-            if r'\end{edXscript}' in line:
-              insideScript=False
-              extraSpace = len(edXscript[0]) - len(edXscript[0].lstrip(' '))
-              for L in edXscript:
-                newstring.append(L[extraSpace:])
-              edXscript=[]
-
-            if insideScript:
-              edXscript.append(line)
-              continue
-
-            if r'\begin{edXscript}' in line:
-              insideScript=True
-
 
             if not r'\begin' in line:
                 newstring.append(line)

@@ -1669,15 +1669,10 @@ class latex2edx(object):
                 print("Warning: empty script!")
                 print("Script location: %s" % etree.tostring(script))
                 continue
-            # Remove indentation before trying to compile
-            L = [x for x in script.text.split("\n") if x.strip() != '']
-            baseIndent = len(L[0]) - len(L[0].lstrip(' '))
-            #each line starts with baseIndent spaces
-            newscript = '\n'.join([x[baseIndent:].rstrip() for x in L])
             try:
-                pyfile.write(newscript)
+                pyfile.write(script.text)
             except Exception as err:
-                print("Error checking python script %s" % newscript)
+                print("Error checking python script %s" % script.text)
                 print(str(err))
                 print("Script location: %s" % etree.tostring(script))
                 continue
