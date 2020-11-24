@@ -455,6 +455,7 @@ class latex2edx(object):
     @staticmethod
     def fix_scripts(tree):
         '''
+          Remove common indentation from lines in <script> elements
         '''
         def first_nonempty_entry(L):
             for x in L:
@@ -463,17 +464,12 @@ class latex2edx(object):
             return -1
 
         def process_indentation(fstring):
-            print("=============PROCESSING=============")
-            print(fstring)
             lines = fstring.split("\n")
             fne = first_nonempty_entry(lines)
-            print("fne: {}".format(fne))
             extraSpace = len(fne) - len(fne.lstrip(' '))
             newlines = []
             for line in lines:
                 newlines.append(line[extraSpace:].rstrip())
-            print("=============RESULT=============")
-            print("\n".join(newlines))
             return "\n".join(newlines)
 
         for script in tree.findall('.//script'):
